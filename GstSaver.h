@@ -1,3 +1,11 @@
+/***************************************************************
+ * @file GstSaver.h
+ * @brief Header file for the GstSaver class.
+ *
+ * This file contains the declaration of the GstSaver class, which is responsible for
+ * initializing and controlling the GStreamer pipeline for video recording.
+ */
+
 #ifndef GST_SAVER_H
 #define GST_SAVER_H
 
@@ -20,12 +28,16 @@ public:
     void Write();
     void Stop();
 
+    friend void runTests();
+
+    GstElement* getPipeline() const { return pipeline; }
+
 private:
     GstElement* pipeline = nullptr;
-    GstElement* source = nullptr;
+    //GstElement* source = nullptr;
     GstElement* sink = nullptr;
-    GstElement* encoder = nullptr;
-    GstElement* muxer = nullptr;
+    //GstElement* encoder = nullptr;
+    //GstElement* muxer = nullptr;
 
     int pattern;
     int bitrate;

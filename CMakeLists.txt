@@ -15,4 +15,12 @@ add_executable(GstVideoCapture
     GstSaver.cpp
 )
 
+# Add the test executable
+add_executable(test_GstSaver 
+    test_GstSaver.cpp
+    GstSaver.cpp
+)
+
 target_link_libraries(GstVideoCapture ${GST_LIBRARIES})
+target_link_libraries(test_GstSaver ${GST_LIBRARIES})
+
