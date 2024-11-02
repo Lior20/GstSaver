@@ -12,8 +12,6 @@ encode it, and save it to disk with file rotation based on frame count.
 - [Design Decisions](#-design-decisions)
 - [Future Improvements](#-future-improvements)
 - [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#license)
 
 ## ⚙️ Prerequisites
 - GStreamer 1.0 or later
