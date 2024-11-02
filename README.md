@@ -37,7 +37,7 @@ cmake --build .
 ```
 
 ## Usage
-Run the program with the following command-line arguments:
+To execute the program, please navigate to the directory containing the executable file and run the program with the following command-line arguments:
 
 ```bash
 # Run with default settings
