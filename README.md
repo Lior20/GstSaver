@@ -1,4 +1,4 @@
-# GStreamer Video Capture and File Rotation
+# GStreamer Video Capture
 
 ## Overview
 This project implements a C++ class `GstSaver` for video capture using GStreamer, that initializes and manages a GStreamer video pipeline to capture video from a test video source, 
@@ -51,6 +51,10 @@ Run the program with the following command-line arguments:
 - `pattern`: Integer pattern type for the videotestsrc. (0-22)
 - `bitrate`: x264 encoder bitrate (in kbps).
 - `frames_per_file`: Number of frames to save in each file before rotating to a new file.
+
+Video Test Source Patterns (Starting from 0):
+
+<img src="https://i.gyazo.com/283ca2d5aefe414829fba96426768a10.gif" alt="Video Test Source Patterns" width="400"/>
 
 # Example
 ```bash
