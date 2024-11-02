@@ -26,7 +26,7 @@ encode it, and save it to disk with file rotation based on frame count.
 
 ### 2. Build the Project
 1. Clone the repository:
-   - git clone https://github.com/yourusername/gstreamer-video-capture.git
+   - git clone https://github.com/Lior20/ThirdEye.git
    - cd gstreamer-video-capture
 
 2. Create a build directory and run CMake:
