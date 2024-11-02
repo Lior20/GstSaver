@@ -1,23 +1,50 @@
 #include "GstSaver.h"
 
+GstSaver::GstSaver(int pattern, int bitrate, int frames_per_file)
+    : pattern(pattern), bitrate(bitrate), frames_per_file(frames_per_file),
+      pipeline(nullptr), frame_count(0), file_count(0) {}
+
+GstSaver::~GstSaver()
+{
+    Stop();
+}
 
 void GstSaver::Init()
 {
     gst_init(NULL, NULL); 
 
-
-
-    // TODO - Keep working on the command line argument parsing!
+    // Construct pipeline string dynamically
+    std::ostringstream pipeline_des;
+    pipeline_des << "videotestsrc pattern=" << pattern << " num-buffers = " << frames_per_file
+                  << " ! video/x-raw,width=1280,height=720,framerate=30/1"
+                  << " ! x264enc bitrate=" << bitrate
+                  << " ! mp4mux ! multifilesink name=sink location=output_" << file_count << ".mp4";
     
+    std::cout << "Pipeline: " << pipeline_des.str() << "\n" << std::endl;  // Debug print
 
     GError* error = nullptr;
-    pipeline = gst_parse_launch(dest_file, &error);
+    pipeline = gst_parse_launch(pipeline_des.str().c_str(), &error);
 
     if(error)
     {
-        std:cerr << "Error - parse pipeline: " << error->message << std::endl;
+        std::cerr << "Error - parse pipeline: " << error->message << std::endl;
         g_error_free(error);
-        gst_object_unref (pipeline);
+        if (pipeline)
+        {
+            gst_object_unref(pipeline);
+            pipeline = NULL;
+        }
+    }
+
+    // Get the multifilesink element to update its properties
+    sink = gst_bin_get_by_name(GST_BIN(pipeline), "sink");
+    if (!sink) {
+        std::cerr << "Could not retrieve multifilesink element \n" << std::endl;
+        return;
+    }
+    else
+    {
+        g_object_set(G_OBJECT(sink), "next-file", 2, NULL);
     }
 
     GstStateChangeReturn ret = gst_element_set_state (pipeline, GST_STATE_PLAYING);
@@ -28,29 +55,36 @@ void GstSaver::Init()
     }
 }
 
-
 void GstSaver::Write()
 {
     frame_count++;
-    if (frameCount >= frames_per_file)
+    if (frame_count >= frames_per_file)
     {
+        std::cout << "Rotating file... \n" << std::endl;  // Debug print
         Stop();
-        Init();
         frame_count = 0;
         file_count++;
+        Init();
     }
-}
 
+    g_usleep(1000000 / 30); // ~30 fps
+}
 
 void GstSaver::Stop()
 {
     if (pipeline != NULL)
     {
-        gst_element_send_event(m_pipeline, gst_event_new_eos());
+        std::cout << "Stopping pipeline... \n" << std::endl;  // Debug print
 
         GstBus *bus = gst_element_get_bus(pipeline);
 
-        GstMessage *msg = gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE, GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
+        if (!gst_element_send_event(pipeline, gst_event_new_eos()))
+        {
+            std::cerr << "Failed to send EOS event \n" << std::endl;
+        }
+
+        
+        GstMessage *msg = gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE, (GstMessageType)(GST_MESSAGE_ERROR | GST_MESSAGE_EOS));
             
         if (msg != NULL)
         {
@@ -62,11 +96,16 @@ void GstSaver::Stop()
         gst_object_unref(pipeline);
         pipeline = NULL;
 
+        if (sink) gst_object_unref(sink);
+        sink = NULL;
+
         if (bus) gst_object_unref(bus);
+
+        std::cout << "Pipeline stopped \n" << std::endl;  // Debug print
     }
 }
 
-void ErrHandle(GstBus *bus, GstMessage *message)
+void GstSaver::ErrHandle(GstBus *bus, GstMessage *message)
 {
     GError *err;
     gchar *debug_info;
@@ -90,9 +129,3 @@ void ErrHandle(GstBus *bus, GstMessage *message)
     }
     gst_message_unref(message);
 }
-
-
-
-
-
-
