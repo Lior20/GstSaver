@@ -1,15 +1,26 @@
 # GStreamer Video Capture
 
-## Overview
+## 🚀 Overview
 This project implements a C++ class `GstSaver` for video capture using GStreamer, that initializes and manages a GStreamer video pipeline to capture video from a test video source, 
 encode it, and save it to disk with file rotation based on frame count.
 
-## Prerequisites
+## 📚 Table of Contents
+- [Prerequisites](#-prerequisites)
+- [Installation](#-Installation (Windows))
+- [Usage](#-usage)
+- [Key Features](#-key-features)
+- [Design Decisions](#-design-decisions)
+- [Future Improvements](#-future-improvements)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#license)
+
+## ⚙️ Prerequisites
 - GStreamer 1.0 or later
 - C++11 compatible compiler
 - CMake 3.10 or later
 
-## Installation (Windows)
+## 🛠️ Installation (Windows)
 
 ### 1. Install GStreamer
 1. Download and install GStreamer:
@@ -44,7 +55,7 @@ cmake ..
 cmake --build .
 ```
 
-## Usage
+## 📦 Usage
 To execute the program, please navigate to the directory containing the executable file and run the program with the following command-line arguments:
 
 ```bash
@@ -70,13 +81,13 @@ Video Test Source Patterns (Starting from 0):
 ```
 This will start capturing video using pattern 0, with a bitrate of 2000 kbps, and create a new file every 300 frames.
 
-## Key Features
+## 🔑 Key Features
 - Dynamic GStreamer pipeline generation
 - Automatic file rotation
 - Configurable video test source patterns
 - Bitrate and frame count customization
 
-## Design Decisions
+## 🧠 Design Decisions
 
 1. **GStreamer Pipeline**: We use `gst_parse_launch` to create the pipeline programmatically, allowing for flexible configuration of video parameters.
 
@@ -84,14 +95,14 @@ This will start capturing video using pattern 0, with a bitrate of 2000 kbps, an
 
 4. **Memory Management**: RAII principles are followed to ensure proper resource cleanup.
 
-## Future Improvements
+## 🚀 Future Improvements
 
 1. Implement more flexible video source options (e.g., camera input).
 2. Add support for different video codecs and container formats.
 3. Implement a GUI for easier parameter configuration.
 4. Add more comprehensive logging and error reporting.
 
-## Troubleshooting
+## 🐞 Troubleshooting
 - Ensure GStreamer is correctly installed
 - Check PATH environment variable
 - Verify GStreamer runtime is available
