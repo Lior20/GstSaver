@@ -18,9 +18,14 @@ encode it, and save it to disk with file rotation based on frame count.
    - Run both installers, selecting "Add GStreamer to PATH" when prompted.
 
 2. Add GStreamer bin directory to PATH
-   - typically `C:\gstreamer\1.0\msvc_x86_64\bin` for 64-bit systems.
 
-3. Verify the installation:
+   If not added automatically, manually add GStreamer’s bin directory to your
+   PATH:
+   - Open the Start menu, search for "Environment Variables," and open it.
+   - Under "System variables," find Path, click Edit, and add the path to
+   - GStreamer’s bin directory (typically C:\gstreamer\1.0\msvc_x86_64\bin for 64-bit systems).
+
+4. Verify the installation:
    - Open a Command Prompt or PowerShell window.
    - Run `gst-launch-1.0.exe --version`.
 
