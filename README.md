@@ -29,7 +29,10 @@ encode it, and save it to disk with file rotation based on frame count.
    - Open a Command Prompt or PowerShell window.
    - Run `gst-launch-1.0.exe --version`.
 
-### 2. Build the Project
+### 2. Install CMake
+   If you don't have CMake installed, download and install it from the [official CMake website](https://cmake.org/download/).
+   
+### 3. Build the Project
 1. Clone the repository:
    - git clone https://github.com/Lior20/ThirdEye.git
 
