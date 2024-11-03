@@ -84,6 +84,14 @@ Video Test Source Patterns (Starting from 0):
 ```
 This will start capturing video using pattern 0, with a bitrate of 2000 kbps, and create a new file every 300 frames.
 
+### Test File
+A test file named `test_GstSaver.cpp` has been created to implement unit tests for the GstSaver class, covering various scenarios such as initialization, writing video frames, file rotation, and error handling.
+
+### Sample videos
+Two sample output videos have been generated during testing and found in this repo
+* 'sample_output_0_2000_300' - pattern = 0, bitrate = 2000, frames_per_file = 300.
+* 'sample_output_22_5000_600' - pattern = 22, bitrate = 5000, frames_per_file = 600.
+
 ## 🔑 Key Features
 - Dynamic GStreamer pipeline generation
 - Automatic file rotation
