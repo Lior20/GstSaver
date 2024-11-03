@@ -53,6 +53,11 @@ cmake ..
 cmake --build .
 ```
 
+Note: To delete the executable files created you can use:
+```bash
+cmake --build . --target clean
+```
+
 ## 📦 Usage
 To execute the program, please navigate to the directory containing the executable file and run the program with the following command-line arguments:
 
