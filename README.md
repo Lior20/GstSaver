@@ -6,7 +6,7 @@ encode it, and save it to disk with file rotation based on frame count.
 
 ## 📚 Table of Contents
 - [Prerequisites](#%EF%B8%8F-prerequisites)
-- [Installation](#-Installation (Windows))
+- [Installation](#%EF%B8%8F-installation-windows)
 - [Usage](#-usage)
 - [Key Features](#-key-features)
 - [Design Decisions](#-design-decisions)
