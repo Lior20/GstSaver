@@ -5,7 +5,7 @@ This project implements a C++ class `GstSaver` for video capture using GStreamer
 encode it, and save it to disk with file rotation based on frame count.
 
 ## 📚 Table of Contents
-- [Prerequisites](#-prerequisites)
+- [Prerequisites](#%EF%B8%8F-prerequisites)
 - [Installation](#-Installation (Windows))
 - [Usage](#-usage)
 - [Key Features](#-key-features)
