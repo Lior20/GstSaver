@@ -58,10 +58,10 @@ To execute the program, please navigate to the directory containing the executab
 
 ```bash
 # Run with default settings
-./video_capture
+./GstVideoCapture
 
 # Customize parameters
-./video_capture [pattern] [bitrate] [frames_per_file]
+./GstVideoCapture [pattern] [bitrate] [frames_per_file]
 ```
 
 ### Parameters
@@ -75,7 +75,7 @@ Video Test Source Patterns (Starting from 0):
 
 # Example
 ```bash
-./video_capture 0 2000 300
+./GstVideoCapture 0 2000 300
 ```
 This will start capturing video using pattern 0, with a bitrate of 2000 kbps, and create a new file every 300 frames.
 
