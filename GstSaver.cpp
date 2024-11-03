@@ -57,10 +57,10 @@ void GstSaver::Init()
 
     // Construct pipeline string dynamically
     std::ostringstream pipeline_des;
-    pipeline_des << "videotestsrc pattern=" << pattern << " num-buffers = " << frames_per_file
+    pipeline_des << "videotestsrc pattern=" << pattern << " num-buffers=" << frames_per_file
                   << " ! video/x-raw,width=1280,height=720,framerate=30/1"
                   << " ! x264enc bitrate=" << bitrate
-                  << " ! mp4mux ! multifilesink name=sink location=output_" << file_count << ".mp4";
+                  << " ! mp4mux ! filesink location=output_" << file_count << ".mp4";
 
     GError* error = nullptr;
     pipeline = gst_parse_launch(pipeline_des.str().c_str(), &error);
@@ -76,19 +76,17 @@ void GstSaver::Init()
         }
     }
 
-    // Get the multifilesink element to update its properties
-    sink = gst_bin_get_by_name(GST_BIN(pipeline), "sink");
-    if (!sink) {
-        std::cerr << "Could not retrieve multifilesink element \n" << std::endl;
+    GstStateChangeReturn ret = gst_element_set_state(pipeline, GST_STATE_READY);
+    if (ret == GST_STATE_CHANGE_FAILURE)
+    {
+        g_printerr("Unable to set the pipeline to the ready state.\n");
+        gst_object_unref(pipeline);
+        pipeline = NULL;
         return;
     }
-    else
-    {
-        g_object_set(G_OBJECT(sink), "next-file", 2, NULL);
-    }
 
-    GstStateChangeReturn ret = gst_element_set_state (pipeline, GST_STATE_PLAYING);
-    if (ret == GST_STATE_CHANGE_FAILURE) 
+    ret = gst_element_set_state (pipeline, GST_STATE_PLAYING);
+    if (ret == GST_STATE_CHANGE_FAILURE)
     {
         g_printerr ("Unable to set the pipeline to the playing state.\n");
         gst_object_unref (pipeline);
@@ -151,6 +149,12 @@ void GstSaver::Stop()
         }
 
         gst_element_set_state(pipeline, GST_STATE_PAUSED);
+
+        GstStateChangeReturn ret = gst_element_get_state(pipeline, NULL, NULL, GST_SECOND);
+        if (ret == GST_STATE_CHANGE_FAILURE) {
+            g_printerr("Failed to stop pipeline\n");
+        }
+
         gst_element_set_state(pipeline, GST_STATE_NULL);
         gst_object_unref(pipeline);
         pipeline = NULL;

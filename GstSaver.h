@@ -34,14 +34,11 @@ public:
 
 private:
     GstElement* pipeline = nullptr;
-    //GstElement* source = nullptr;
     GstElement* sink = nullptr;
-    //GstElement* encoder = nullptr;
-    //GstElement* muxer = nullptr;
 
     int pattern;
     int bitrate;
-    int frames_per_file;
+    int frames_per_file = 0;
     int frame_count = 0;
     int file_count = 0;
 
